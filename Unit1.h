@@ -16,12 +16,16 @@ __published:	// IDE-managed Components
         TShape *background;
         TImage *ball;
         TTimer *TimerBall;
-        TImage *paddleLeft;
-        TImage *paddleRight;
         TTimer *TimerLeftUp;
         TTimer *TimerLeftDown;
         TTimer *TimerRightUp;
         TTimer *TimerRightDown;
+        TLabel *scoreboard;
+        TButton *Button1;
+        TButton *Button2;
+        TLabel *Label1;
+        TImage *paddleRight;
+        TImage *paddleLeft;
         void __fastcall TimerBallTimer(TObject *Sender);
         void __fastcall TimerLeftUpTimer(TObject *Sender);
         void __fastcall TimerLeftDownTimer(TObject *Sender);
@@ -31,6 +35,10 @@ __published:	// IDE-managed Components
           TShiftState Shift);
         void __fastcall FormKeyUp(TObject *Sender, WORD &Key,
           TShiftState Shift);
+        void __fastcall Button1Click(TObject *Sender);
+        void __fastcall Button2Click(TObject *Sender);
+        void __fastcall FormClose(TObject *Sender, TCloseAction &Action);
+        void __fastcall FormCreate(TObject *Sender);
 private:	// User declarations
 public:		// User declarations
         __fastcall TForm1(TComponent* Owner);

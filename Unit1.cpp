@@ -4,14 +4,15 @@
 #pragma hdrstop
 
 #include "Unit1.h"
+#include "mmsystem.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
 TForm1 *Form1;
 int x = 10;
 int y = 10;
-int player1Points;
-int player2Points;
+int player1Points = 0;
+int player2Points = 0;
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
@@ -34,38 +35,94 @@ void __fastcall TForm1::TimerBallTimer(TObject *Sender)
       TimerBall->Enabled=false;
       ball->Visible=false;
       player2Points++;
+      Label1->Caption="Point for the right player >";
+      Label1->Visible=true;
+      sndPlaySound("snd/brawa.wav",SND_ASYNC);
+
+      scoreboard->Caption="Result : " + IntToStr(player1Points)+ ":" + IntToStr(player2Points);
+      scoreboard->Visible=true;
+      Button1->Visible=true;
+      Button2->Visible=true;
    }
    if(ball->Left+ball->Width >= paddleRight->Left+20)
    {
       TimerBall->Enabled=false;
       ball->Visible=false;
       player1Points++;
+      Label1->Caption="< Point for the left player";
+      Label1->Visible=true;
+      sndPlaySound("snd/brawa.wav",SND_ASYNC);
+
+      scoreboard->Caption="Result : " + IntToStr(player1Points)+ ":" + IntToStr(player2Points);
+      scoreboard->Visible=true;
+      Button1->Visible=true;
+      Button2->Visible=true;
    }
-   if(ball->Top+ball->Height/2 > paddleRight->Top &&
-   ball->Top < paddleRight->Top+paddleRight->Height && ball->Left+ball->Width > paddleRight->Left)
-   {
-       if(x > 0)
+  else if ((ball->Left < paddleLeft->Left + paddleLeft->Width &&
+           ball->Top + ball->Height/2 <= paddleLeft->Top + paddleLeft->Height &&
+           ball->Top + ball->Height/2 >= paddleLeft->Top))
        {
-         x = - x;
-         //faster bounce
-         if(ball->Top+ball->Height/2 > paddleRight->Top+paddleLeft->Height/2-30 &&
-         ball->Top < paddleRight->Top+paddleLeft->Height/2+30)
-         { x *= 1.1; y *= 1.1;   }
+                x = -1.1 * x;
+                if(x < 0)
+                {
+
+                        if ((ball->Left <= paddleLeft->Left + paddleLeft->Width &&
+                        ball->Top + ball->Height/2 < paddleLeft->Top + paddleLeft->Height/3 &&
+                        ball->Top + ball->Height/2 >= paddleLeft->Top))
+                        {
+                                x = -  0.9 * x;
+                                y = 0.9 * y;
+                        }
+
+
+                        else if ((ball->Left <= paddleLeft->Left + paddleLeft->Width &&
+                        ball->Top + ball->Height/2 <= paddleLeft->Top + 2 * paddleLeft->Height/3 &&
+                        ball->Top + ball->Height/2 >= paddleLeft->Top + paddleLeft->Height/3))
+                        {
+                                x = - x;
+                        }
+
+                        else if ((ball->Left <= paddleLeft->Left + paddleLeft->Width &&
+                        ball->Top + ball->Height/2 <= paddleLeft->Top +  paddleLeft->Height &&
+                        ball->Top + ball->Height/2 > paddleLeft->Top + 2/3 * paddleLeft->Height))
+                        {
+                                x = -1.2 * x;
+                                y = 1.2 * y;
+                        }
+                }
        }
 
-   }
-   else if(ball->Top+ball->Height/2 > paddleLeft->Top && ball->Top < paddleLeft->Top+paddleLeft->Height &&
-   ball->Left < paddleLeft->Left+paddleLeft->Width)
-   {
-       if(x < 0)
-       {
-         x = - x;
-         //faster bounce
-         if(ball->Top+ball->Height/2 > paddleLeft->Top+paddleLeft->Height/2-30 &&
-         ball->Top < paddleLeft->Top+paddleLeft->Height/2+30) {x *= 1.1; y *= 1.1;}
-       }
+   else if ((ball->Left + ball->Width >= paddleRight->Left  &&
+           ball->Top + ball->Height/2 <= paddleRight->Top + paddleRight->Height &&
+           ball->Top + ball->Height/2 >= paddleRight->Top))
+            {
+                x =  -1.1 * x;
 
-   }
+                if(x > 0)
+                {
+                        if ((ball->Left + ball->Width >= paddleRight->Left &&
+                        ball->Top + ball->Height/2 < paddleRight->Top + paddleRight->Height/3 &&
+                        ball->Top + ball->Height/2 >= paddleRight->Top))
+                        {
+                                x = -  0.9 * x;
+                                y = 0.9 * y;
+                        }
+
+                        else if ((ball->Left <= paddleRight->Left + paddleRight->Width &&
+                        ball->Top + ball->Height/2 <= paddleRight->Top + 2 * paddleRight->Height/3 &&
+                        ball->Top + ball->Height/2 >= paddleRight->Top + paddleRight->Height/3))
+                        {
+                                x = - x;
+                        }
+                        else if ((ball->Left <= paddleRight->Left + paddleRight->Width &&
+                        ball->Top + ball->Height/2 <= paddleRight->Top +  paddleRight->Height &&
+                        ball->Top + ball->Height/2 > paddleRight->Top + 2/3 * paddleRight->Height))
+                        {
+                                x = -1.2 * x;
+                                y = 1.2 * y;
+                        }
+                }
+       }
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::TimerLeftUpTimer(TObject *Sender)
@@ -109,3 +166,83 @@ void __fastcall TForm1::FormKeyUp(TObject *Sender, WORD &Key,
    if(Key == 90) TimerLeftDown->Enabled = false;
 }
 //---------------------------------------------------------------------------
+void __fastcall TForm1::Button2Click(TObject *Sender)
+{
+   if(player1Points!=0 || player2Points!=0)
+  {
+    if(Application->MessageBox(
+    "Are you sure? You want to start again?","Confirm",MB_YESNO | MB_ICONQUESTION) == IDYES)
+    {
+        TimerBall->Enabled=true;
+        paddleLeft->Enabled=true;
+        paddleRight->Enabled=true;
+        Button1->Visible=false;
+        Button2->Visible=false;
+        Label1->Visible=false;
+        scoreboard->Visible=false;
+        player1Points=0;
+        player2Points=0;
+        ball->Top=224;
+        ball->Left=(paddleLeft->Left+paddleRight->Left)/2;
+        ball->Visible=true;
+        x = -10;
+        y = -10;
+        paddleLeft->Top = background->Height/2 - paddleLeft->Height/2;
+        paddleRight->Top = background->Height/2 - paddleRight->Height/2;
+        paddleLeft->Left = background->Left+30;
+        paddleRight->Left = background->Width-50;
+
+    }
+  }
+  else
+  {
+    TimerBall->Enabled=true;
+    paddleLeft->Enabled=true;
+    paddleRight->Enabled=true;
+    Button1->Visible=false;
+    Label1->Visible=false;
+    paddleLeft->Top = background->Height/2 - paddleLeft->Height/2;
+    paddleRight->Top = background->Height/2 - paddleRight->Height/2;
+    paddleLeft->Left = background->Left+30;
+    paddleRight->Left = background->Width-50;
+  }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+  TimerBall->Enabled=true;
+  paddleLeft->Enabled=true;
+  paddleRight->Enabled=true;
+  Button1->Visible=false;
+  Button2->Visible=false;
+  Label1->Visible=false;
+  scoreboard->Visible=false;
+  ball->Top=224;
+  ball->Left=(paddleLeft->Left+paddleRight->Left)/2;
+  ball->Visible=true;
+  x = 10;
+  y = 10;
+  paddleLeft->Top = background->Height/2 - paddleLeft->Height/2;
+  paddleRight->Top = background->Height/2 - paddleRight->Height/2;
+  paddleLeft->Left = background->Left+30;
+  paddleRight->Left = background->Width-50;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
+{
+     if(Application->MessageBox(
+    "Do you want close a program?","Confirm",MB_YESNO | MB_ICONQUESTION) == IDNO)
+    {
+      Action = caNone;
+    }
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::FormCreate(TObject *Sender)
+{
+ ;
+}
+//---------------------------------------------------------------------------
+
