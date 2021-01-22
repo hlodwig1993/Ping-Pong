@@ -905,9 +905,23 @@ object Form1: TForm1
       291B16291B16291B16291B16291B16291B16291B16291B16291B16291B001004
       FFFFFF000000}
   end
+  object Label2: TLabel
+    Left = 424
+    Top = 144
+    Width = 73
+    Height = 29
+    Caption = 'Label2'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -24
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    Visible = False
+  end
   object Button1: TButton
     Left = 376
-    Top = 352
+    Top = 240
     Width = 201
     Height = 65
     Caption = 'Next turn'
@@ -923,7 +937,7 @@ object Form1: TForm1
   end
   object Button2: TButton
     Left = 376
-    Top = 240
+    Top = 320
     Width = 209
     Height = 57
     Caption = 'New game'
@@ -934,8 +948,22 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 1
-    Visible = False
     OnClick = Button2Click
+  end
+  object Button3: TButton
+    Left = 432
+    Top = 424
+    Width = 97
+    Height = 41
+    Caption = 'Options'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -24
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    OnClick = Button3Click
   end
   object TimerBall: TTimer
     Enabled = False
@@ -945,24 +973,28 @@ object Form1: TForm1
     Top = 16
   end
   object TimerLeftUp: TTimer
+    Enabled = False
     Interval = 10
     OnTimer = TimerLeftUpTimer
     Left = 16
     Top = 96
   end
   object TimerLeftDown: TTimer
+    Enabled = False
     Interval = 10
     OnTimer = TimerLeftDownTimer
     Left = 16
     Top = 344
   end
   object TimerRightUp: TTimer
+    Enabled = False
     Interval = 10
     OnTimer = TimerRightUpTimer
     Left = 976
     Top = 80
   end
   object TimerRightDown: TTimer
+    Enabled = False
     Interval = 10
     OnTimer = TimerRightDownTimer
     Left = 992

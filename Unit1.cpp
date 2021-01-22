@@ -4,6 +4,7 @@
 #pragma hdrstop
 
 #include "Unit1.h"
+#include "Unit2.h"
 #include "mmsystem.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
@@ -13,6 +14,26 @@ int x = 10;
 int y = 10;
 int player1Points = 0;
 int player2Points = 0;
+
+void Option()
+{
+ if(Form2->RadioGroup1->ItemIndex==0)
+     {
+        Form1->ball->Left+= 0.8*x;
+        Form1->ball->Top+= 0.8*y;
+     }
+     else if(Form2->RadioGroup1->ItemIndex==1)
+     {
+        x = x;
+        y = y;
+     }
+     else if(Form2->RadioGroup1->ItemIndex==2)
+     {
+        Form1->ball->Left+= 1.2*x;
+        Form1->ball->Top+= 1.2*y;
+     }
+}
+
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
@@ -22,6 +43,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 
 void __fastcall TForm1::TimerBallTimer(TObject *Sender)
 {
+    Option();
     ball->Left+= x;// ballHorizontalMovement;
     ball->Top+= y ;// ballVerticalMovement;
 
@@ -43,6 +65,17 @@ void __fastcall TForm1::TimerBallTimer(TObject *Sender)
       scoreboard->Visible=true;
       Button1->Visible=true;
       Button2->Visible=true;
+
+      if(player2Points ==15)
+      {
+      Label1->Visible=false;
+      scoreboard->Visible=false;
+      Button1->Visible=false;
+      Button2->Visible=false;
+      Label2->Visible=true;
+   Label2->Caption="Player on the right site win!!";
+   Button2->Visible=true;
+   }
    }
    if(ball->Left+ball->Width >= paddleRight->Left+20)
    {
@@ -57,6 +90,18 @@ void __fastcall TForm1::TimerBallTimer(TObject *Sender)
       scoreboard->Visible=true;
       Button1->Visible=true;
       Button2->Visible=true;
+   if(player1Points ==15)
+   {
+      Label1->Visible=false;
+      scoreboard->Visible=false;
+      Button1->Visible=false;
+      Button2->Visible=false;
+      Label2->Visible=true;
+      Label2->Caption="Player on the left site win!!" ;
+      Button2->Visible=true;
+
+
+   }
    }
   else if ((ball->Left < paddleLeft->Left + paddleLeft->Width &&
            ball->Top + ball->Height/2 <= paddleLeft->Top + paddleLeft->Height &&
@@ -200,6 +245,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
     paddleLeft->Enabled=true;
     paddleRight->Enabled=true;
     Button1->Visible=false;
+    Button2->Visible=false;
     Label1->Visible=false;
     paddleLeft->Top = background->Height/2 - paddleLeft->Height/2;
     paddleRight->Top = background->Height/2 - paddleRight->Height/2;
@@ -243,6 +289,13 @@ void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
 void __fastcall TForm1::FormCreate(TObject *Sender)
 {
  ;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button3Click(TObject *Sender)
+{
+Form2->ShowModal();
+
 }
 //---------------------------------------------------------------------------
 

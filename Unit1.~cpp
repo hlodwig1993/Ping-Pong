@@ -4,6 +4,8 @@
 #pragma hdrstop
 
 #include "Unit1.h"
+#include "Unit2.h"
+#include "mmsystem.h"
 //---------------------------------------------------------------------------
 #pragma package(smart_init)
 #pragma resource "*.dfm"
@@ -12,6 +14,12 @@ int x = 10;
 int y = 10;
 int player1Points = 0;
 int player2Points = 0;
+
+void Option()
+{
+;
+}
+
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
@@ -36,6 +44,7 @@ void __fastcall TForm1::TimerBallTimer(TObject *Sender)
       player2Points++;
       Label1->Caption="Point for the right player >";
       Label1->Visible=true;
+      sndPlaySound("snd/brawa.wav",SND_ASYNC);
 
       scoreboard->Caption="Result : " + IntToStr(player1Points)+ ":" + IntToStr(player2Points);
       scoreboard->Visible=true;
@@ -49,6 +58,7 @@ void __fastcall TForm1::TimerBallTimer(TObject *Sender)
       player1Points++;
       Label1->Caption="< Point for the left player";
       Label1->Visible=true;
+      sndPlaySound("snd/brawa.wav",SND_ASYNC);
 
       scoreboard->Caption="Result : " + IntToStr(player1Points)+ ":" + IntToStr(player2Points);
       scoreboard->Visible=true;
@@ -197,6 +207,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
     paddleLeft->Enabled=true;
     paddleRight->Enabled=true;
     Button1->Visible=false;
+    Button2->Visible=false;
     Label1->Visible=false;
     paddleLeft->Top = background->Height/2 - paddleLeft->Height/2;
     paddleRight->Top = background->Height/2 - paddleRight->Height/2;
@@ -240,6 +251,13 @@ void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
 void __fastcall TForm1::FormCreate(TObject *Sender)
 {
  ;
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button3Click(TObject *Sender)
+{
+Form2->ShowModal();
+
 }
 //---------------------------------------------------------------------------
 
