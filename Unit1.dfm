@@ -24,8 +24,8 @@ object Form1: TForm1
     Brush.Color = clWindowFrame
   end
   object ball: TImage
-    Left = 872
-    Top = 192
+    Left = 104
+    Top = 56
     Width = 32
     Height = 32
     AutoSize = True
@@ -904,7 +904,7 @@ object Form1: TForm1
       FFFF}
   end
   object TimerBall: TTimer
-    Interval = 10
+    Interval = 30
     OnTimer = TimerBallTimer
     Left = 104
     Top = 16

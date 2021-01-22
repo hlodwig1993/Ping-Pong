@@ -50,8 +50,7 @@ void __fastcall TForm1::TimerRightUpTimer(TObject *Sender)
 {
     if(paddleRight->Top >= background->Top+10)
    {
-     if(GetKeyState(VK_SPACE) & 0x8000) {}
-     else paddleRight->Top -= 10;
+        paddleRight->Top -= 10;
    }    
 }
 //---------------------------------------------------------------------------
@@ -59,37 +58,26 @@ void __fastcall TForm1::TimerRightDownTimer(TObject *Sender)
 {
     if(paddleRight->Top+paddleRight->Height <= background->Height-10)
    {
-     if(GetKeyState(VK_SPACE) & 0x8000) {}
-     else paddleRight->Top += 10;
+   paddleRight->Top += 10;
    }
 }
 //---------------------------------------------------------------------------
 void __fastcall TForm1::FormKeyDown(TObject *Sender, WORD &Key,
       TShiftState Shift)
 {
-   if(Key == VK_UP) paddleRightup->Enabled = true;
-   if(Key == VK_DOWN) paddle2down->Enabled = true;
-   if(Key == 65) paddleRightup->Enabled = true;
-   if(Key == 90) paddle1down->Enabled = true;
-   if(Key == VK_SPACE)
-   {
-     timerBall->Enabled=false;
-     Label4->Visible=true;
-   }
-   }     
+   if(Key == VK_UP) TimerRightUp->Enabled = true;
+   if(Key == VK_DOWN) TimerRightDown->Enabled = true;
+   if(Key == 65) TimerLeftUp->Enabled = true;
+   if(Key == 90) TimerLeftDown->Enabled = true;
 }
+
 //---------------------------------------------------------------------------
 void __fastcall TForm1::FormKeyUp(TObject *Sender, WORD &Key,
       TShiftState Shift)
 {
-    if(Key == VK_UP) paddleRightup->Enabled = false;
-   if(Key == VK_DOWN) paddle2down->Enabled = false;
-   if(Key == 65) paddle1up->Enabled = false;
-   if(Key == 90) paddle1down->Enabled = false;
-   if(Key == VK_SPACE)
-   {
-     timerBall->Enabled=true;
-     Label4->Visible=false;
-   }
+    if(Key == VK_UP) TimerRightUp->Enabled = false;
+   if(Key == VK_DOWN) TimerRightDown->Enabled = false;
+   if(Key == 65) TimerLeftUp->Enabled = false;
+   if(Key == 90) TimerLeftDown->Enabled = false;
 }
 //---------------------------------------------------------------------------
