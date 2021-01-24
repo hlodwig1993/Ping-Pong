@@ -17,20 +17,13 @@ int player2Points = 0;
 
 void Option()
 {
- if(Form2->RadioGroup1->ItemIndex==0)
+if(Form2->RadioGroup1->ItemIndex==0)
      {
-        Form1->ball->Left+= 0.8*x;
-        Form1->ball->Top+= 0.8*y;
+       sndPlaySound("snd/jeden.wav",SND_ASYNC);
      }
      else if(Form2->RadioGroup1->ItemIndex==1)
      {
-        x = x;
-        y = y;
-     }
-     else if(Form2->RadioGroup1->ItemIndex==2)
-     {
-        Form1->ball->Left+= 1.2*x;
-        Form1->ball->Top+= 1.2*y;
+        sndPlaySound("snd/dwa.wav",SND_ASYNC);
      }
 }
 
@@ -43,7 +36,6 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 
 void __fastcall TForm1::TimerBallTimer(TObject *Sender)
 {
-    Option();
     ball->Left+= x;// ballHorizontalMovement;
     ball->Top+= y ;// ballVerticalMovement;
 
@@ -223,6 +215,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
         paddleRight->Enabled=true;
         Button1->Visible=false;
         Button2->Visible=false;
+        Button3->Visible=false;
         Label1->Visible=false;
         scoreboard->Visible=false;
         player1Points=0;
@@ -246,6 +239,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
     paddleRight->Enabled=true;
     Button1->Visible=false;
     Button2->Visible=false;
+    Button3->Visible=false;
     Label1->Visible=false;
     paddleLeft->Top = background->Height/2 - paddleLeft->Height/2;
     paddleRight->Top = background->Height/2 - paddleRight->Height/2;
@@ -257,6 +251,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
 
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
+  Option();
   TimerBall->Enabled=true;
   paddleLeft->Enabled=true;
   paddleRight->Enabled=true;
@@ -288,7 +283,16 @@ void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
 
 void __fastcall TForm1::FormCreate(TObject *Sender)
 {
- ;
+ if(Application->MessageBox(
+    "Welcom in PingPong game.\n\nLeft player control game using A i Z.\n"
+    "Right player control game using up and down arrow.\n\n"
+    "To diversify the fun when you hit the ball with the middle part of the racket,"
+    "the speed of the ball will change. The longer you bounce, the more speed the ball has.\n"
+    "In the options menu, you can turn music on or off.\n\n"
+    "Have fun!!","PingPong",MB_OK | MB_ICONWARNING) == IDOK)
+    {
+      Action = caNone;
+    }
 }
 //---------------------------------------------------------------------------
 

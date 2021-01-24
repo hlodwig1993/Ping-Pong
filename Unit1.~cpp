@@ -17,7 +17,23 @@ int player2Points = 0;
 
 void Option()
 {
-;
+if(Form2->RadioGroup1->ItemIndex==0)
+     {
+        Form1->ball->Width = 10;
+        Form1->ball->Height = 10;
+     }
+     //Œerednia - domyslna
+     else if(Form2->RadioGroup1->ItemIndex==1)
+     {
+        Form1->ball->Width = 30;
+        Form1->ball->Height = 30;
+     }
+     //Duza
+     else if(Form2->RadioGroup1->ItemIndex==2)
+     {
+        Form1->ball->Width = 60;
+        Form1->ball->Height = 60;
+     }
 }
 
 //---------------------------------------------------------------------------
@@ -50,6 +66,17 @@ void __fastcall TForm1::TimerBallTimer(TObject *Sender)
       scoreboard->Visible=true;
       Button1->Visible=true;
       Button2->Visible=true;
+
+      if(player2Points ==15)
+      {
+      Label1->Visible=false;
+      scoreboard->Visible=false;
+      Button1->Visible=false;
+      Button2->Visible=false;
+      Label2->Visible=true;
+   Label2->Caption="Player on the right site win!!";
+   Button2->Visible=true;
+   }
    }
    if(ball->Left+ball->Width >= paddleRight->Left+20)
    {
@@ -64,6 +91,18 @@ void __fastcall TForm1::TimerBallTimer(TObject *Sender)
       scoreboard->Visible=true;
       Button1->Visible=true;
       Button2->Visible=true;
+   if(player1Points ==15)
+   {
+      Label1->Visible=false;
+      scoreboard->Visible=false;
+      Button1->Visible=false;
+      Button2->Visible=false;
+      Label2->Visible=true;
+      Label2->Caption="Player on the left site win!!" ;
+      Button2->Visible=true;
+
+
+   }
    }
   else if ((ball->Left < paddleLeft->Left + paddleLeft->Width &&
            ball->Top + ball->Height/2 <= paddleLeft->Top + paddleLeft->Height &&
@@ -185,6 +224,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
         paddleRight->Enabled=true;
         Button1->Visible=false;
         Button2->Visible=false;
+        Button3->Visible=false;
         Label1->Visible=false;
         scoreboard->Visible=false;
         player1Points=0;
@@ -208,6 +248,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
     paddleRight->Enabled=true;
     Button1->Visible=false;
     Button2->Visible=false;
+    Button3->Visible=false;
     Label1->Visible=false;
     paddleLeft->Top = background->Height/2 - paddleLeft->Height/2;
     paddleRight->Top = background->Height/2 - paddleRight->Height/2;
@@ -219,6 +260,7 @@ void __fastcall TForm1::Button2Click(TObject *Sender)
 
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
+      Option();
   TimerBall->Enabled=true;
   paddleLeft->Enabled=true;
   paddleRight->Enabled=true;
@@ -250,7 +292,16 @@ void __fastcall TForm1::FormClose(TObject *Sender, TCloseAction &Action)
 
 void __fastcall TForm1::FormCreate(TObject *Sender)
 {
- ;
+ if(Application->MessageBox(
+    "Welcom in PingPong game.\n\nLeft player control game using A i Z.\n"
+    "Right player control game using up and down arrow.\n\n"
+    "To diversify the fun when you hit the ball with the middle part of the racket,"
+    "the speed of the ball will change. The longer you bounce, the more speed the ball has.\n"
+    "In the options menu, you can turn music on or off.\n\n"
+    "Have fun!!","PingPong",MB_OK | MB_ICONWARNING) == IDOK)
+    {
+      Action = caNone;
+    }
 }
 //---------------------------------------------------------------------------
 

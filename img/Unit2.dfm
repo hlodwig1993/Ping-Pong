@@ -1,9 +1,9 @@
 object Form2: TForm2
-  Left = 192
-  Top = 125
+  Left = 194
+  Top = 129
   Width = 280
-  Height = 363
-  Caption = 'Form2'
+  Height = 295
+  Caption = 'Options'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -17,7 +17,7 @@ object Form2: TForm2
     Left = 0
     Top = 0
     Width = 264
-    Height = 324
+    Height = 256
     Align = alClient
     Brush.Color = clLime
   end
@@ -25,23 +25,22 @@ object Form2: TForm2
     Left = 32
     Top = 32
     Width = 201
-    Height = 201
-    Caption = 'Level'
+    Height = 129
+    Caption = 'Music'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -19
     Font.Name = 'MS Sans Serif'
     Font.Style = []
     Items.Strings = (
-      'Beginer'
-      'Amateur'
-      'World Class')
+      'Yes'
+      'No')
     ParentFont = False
     TabOrder = 0
   end
   object Button1: TButton
     Left = 64
-    Top = 248
+    Top = 184
     Width = 113
     Height = 49
     Caption = 'Save'
